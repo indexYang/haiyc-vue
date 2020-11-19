@@ -27,9 +27,9 @@
             >
                 <el-table-column type="index" width="40" align="center"></el-table-column>
                 <el-table-column prop="projectName" label="项目名称"></el-table-column>
-                <el-table-column prop="projectContent" label="项目内容"></el-table-column>
+                <el-table-column prop="projectContent" width="600" :show-overflow-tooltip="true" label="项目内容"></el-table-column>
                 <el-table-column prop="remark" label="备注"></el-table-column>
-				<el-table-column prop="statusView" label="是否有效"></el-table-column>
+				<el-table-column prop="statusView" width="80" label="是否有效"></el-table-column>
                 <el-table-column label="操作" width="300" align="center">
                     <template slot-scope="scope">
                         <el-button type="text" icon="el-icon-edit" @click="handleEdit(scope.row)">编辑</el-button>
@@ -59,10 +59,10 @@
                     <el-input v-model="form.projectName" placeholder="请输入项目名称" show-word-limit maxlength="30"></el-input>
                 </el-form-item>
 				<el-form-item label="项目内容">
-				    <el-input rows="4" cols="33" type="textarea" v-model="form.projectContent" placeholder="请输入项目内容" show-word-limit maxlength="255"></el-input>
+				    <el-input rows="6" cols="33" type="textarea" v-model="form.projectContent" placeholder="请输入项目内容" show-word-limit maxlength="255"></el-input>
 				</el-form-item>
 				<el-form-item label="备注">
-				    <el-input rows="4" cols="33" type="textarea" v-model="form.remark" placeholder="请输入备注" show-word-limit maxlength="255"></el-input>
+				    <el-input rows="6" cols="33" type="textarea" v-model="form.remark" placeholder="请输入备注" show-word-limit maxlength="255"></el-input>
 				</el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
