@@ -44,35 +44,18 @@ export default new Router({
                     component: () => import('../components/page/sys/user.vue'),
                     meta: { title: '用户信息' }
                 },{
-                    path: '/baseStation',
-                    component: () => import('../components/page/baseStation/baseStationTable.vue'),
-                    meta: { title: '基站信息' }
+                    path: '/url',
+                    component: () => import('../components/page/urlInfo/urlInfoTable.vue'),
+                    meta: { title: '网址记录' }
                 },{
-                    path: '/contract',
-                    component: () => import('../components/page/contract/contractTable.vue'),
-                    meta: { title: '铁通合同' }
+                    path: '/member',
+                    component: () => import('../components/page/car/member/memberTable.vue'),
+                    meta: { title: '会员信息' }
                 },{
-                    path: '/construtionContract',
-                    component: () => import('../components/page/contract/constructionContractTable.vue'),
-                    meta: { title: '施工合同' }
-                },{
-                    path: '/doorNo',
-                    component: () => import('../components/page/door/stationDoorNoTable.vue'),
-                    meta: { title: '门户信息' }
-                },{
-                    path: '/electricityBill',
-                    component: () => import('../components/page/door/electricityBillTable.vue'),
-                    meta: { title: '用电账单' }
-                },{
-                    path: '/onTheElectricityBill',
-                    component: () => import('../components/page/door/onTheElectricityBillTable.vue'),
-                    meta: { title: '对上用电账单' }
-                },{
-                    path: '/forTheElectricityBill',
-                    component: () => import('../components/page/door/forTheElectricityBillTable.vue'),
-                    meta: { title: '对下用电账单' }
+                    path: '/project',
+                    component: () => import('../components/page/car/project/projectTable.vue'),
+                    meta: { title: '项目信息' }
                 }
-				
             ]
         },
         {
