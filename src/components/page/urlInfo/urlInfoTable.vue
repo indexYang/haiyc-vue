@@ -277,7 +277,6 @@ export default {
     margin-right: 10px;
 }
 
-
 .table-td-thumb {
     display: block;
     margin: auto;

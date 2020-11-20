@@ -57,7 +57,7 @@
 
         <!-- 新增编辑弹出框 -->
         <el-dialog v-dialogDrag :title="addOrUpTitle" :visible.sync="editVisible" width="35%" :close-on-click-modal="false" @closed="resetModalForm">
-            <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+            <el-form ref="form" :model="form" :rules="rules" label-width="100px" style="padding-right:60px;">
                 <el-form-item label="编号" hidden>
                     <el-input v-model="form.userNo"></el-input>
                 </el-form-item>

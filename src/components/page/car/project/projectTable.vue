@@ -51,13 +51,19 @@
 
         <!-- 新增编辑弹出框 -->
         <el-dialog v-dialogDrag :title="addOrUpTitle" :visible.sync="editVisible" width="35%" :close-on-click-modal="false" @closed="resetModalForm">
-            <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+            <el-form ref="form" :model="form" :rules="rules" label-width="100px" style="padding-right:60px;">
                 <el-form-item label="编号" hidden>
                     <el-input v-model="form.id"></el-input>
                 </el-form-item>
                 <el-form-item label="项目名称" prop="projectName">
                     <el-input v-model="form.projectName" placeholder="请输入项目名称" show-word-limit maxlength="30"></el-input>
                 </el-form-item>
+				<el-form-item label="是否有效" prop="status">
+				    <el-radio-group v-model="form.status">					
+						<el-radio :label="1">有效</el-radio>
+						<el-radio :label="2">失效</el-radio>
+				    </el-radio-group>
+				</el-form-item>
 				<el-form-item label="项目内容">
 				    <el-input rows="6" cols="33" type="textarea" v-model="form.projectContent" placeholder="请输入项目内容" show-word-limit maxlength="255"></el-input>
 				</el-form-item>
@@ -94,6 +100,7 @@ export default {
 			loading: false,
 			initRuleForm: {
 			    id: '',
+				status: '',
 			    projectName: '',
 				projectContent: '',
 				remark: ''
@@ -102,10 +109,11 @@ export default {
 				projectName: [
 				  { required: true, message: '请输入项目名称', trigger: 'blur' },
 				  { min: 1, max: 30, message: '长度在 1 到 30 个字符', trigger: 'blur' }
-				]		  
+				],
+				status:[
+					{ required: true, message: '请选择是否有效', trigger: 'change'}
+				]
 			},
-			dictionaryValues: [],
-			options:[],
 			infoVisiable: false	
         };
     },
@@ -144,6 +152,9 @@ export default {
 		infoAdd() {
 			this.addOrUpTitle = '新增'
 			this.editVisible = true;
+			this.form = {
+				status : 1
+			}
 		},
         // 编辑操作
         async handleEdit(row) {
@@ -159,8 +170,8 @@ export default {
         saveEdit(formName) {
 			this.$refs[formName].validate(valid => {
 			    if (valid) {
-			        const {id, projectName, projectContent, remark} = this.form;
-			        projectApi.addOrModifyCarProjectInfo({id, projectName, projectContent, remark}).then(res => {
+			        const {id, status, projectName, projectContent, remark} = this.form;
+			        projectApi.addOrModifyCarProjectInfo({id, status, projectName, projectContent, remark}).then(res => {
 			            this.editVisible = false;
 			            this.getData();
 			        })
