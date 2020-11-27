@@ -34,6 +34,7 @@
 				<el-table-column prop="roleNames" label="角色" :show-overflow-tooltip="true"></el-table-column>
                 <el-table-column prop="creatorName" label="创建人" :show-overflow-tooltip="true"></el-table-column>
 			    <el-table-column prop="createDate"  label="创建时间"></el-table-column>
+				<el-table-column label="创建时间">{{tableData.createDate}}</el-table-column>
                 <el-table-column label="操作" width="300" align="center">
                     <template slot-scope="scope">
 						<el-button type="text" icon="el-icon-document" @click="getRowInfo(scope.row)">详情</el-button>

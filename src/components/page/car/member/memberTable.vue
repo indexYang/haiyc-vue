@@ -9,21 +9,12 @@
         </div>
         <div class="container">
             <div class="handle-box">
-				<el-input v-model="query.name" placeholder="名称" class="handle-input mr10"></el-input>
-				<el-select v-model="query.type" clearable filterable placeholder="请选择地址类型" style="width:300px;" class="handle-input mr10">
+				<el-input v-model="query.cardNo" placeholder="会员卡号" class="handle-input mr10"></el-input>
+				<el-select v-model="query.type" clearable filterable placeholder="请选择级别" style="width:300px;" class="handle-input mr10">
 				    <el-option v-for="item in dictionaryValues" :key="item.valueId" :label="item.valueName" :value="item.valueId"></el-option>
 				</el-select>
-				<el-cascader
-					placeholder="地区"
-					class="handle-input mr10"
-					filterable
-				    :options="options"
-				    :props="{ checkStrictly: true }"
-					v-model="query.address"
-				    clearable>
-				</el-cascader>
-				<el-input v-model="query.contact" placeholder="联系人" class="handle-input mr10"></el-input>
-				<el-input v-model="query.tel" placeholder="联系方式" class="handle-input mr10"></el-input>
+				<el-input v-model="query.phone" placeholder="手机号码" class="handle-input mr10"></el-input>
+				<el-input v-model="query.carNum" placeholder="车牌号" class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
 				<el-button icon="el-icon-refresh-right" @click="resetForm()">重 置</el-button>
             </div>
@@ -50,6 +41,7 @@
 				<el-table-column prop="limiteDate"  label="有效时间"></el-table-column>
                 <el-table-column label="操作" width="300" align="center">
                     <template slot-scope="scope">
+						<el-button type="text" icon="el-icon-circle-plus-outline" @click="getRowInfo(scope.row)">项目管理</el-button>
 						<el-button type="text" icon="el-icon-document" @click="getRowInfo(scope.row)">详情</el-button>
                         <el-button type="text" icon="el-icon-edit" @click="handleEdit(scope.row)">编辑</el-button>
                         <el-button type="text" icon="el-icon-delete" class="red" @click="handleDelete(scope.row.id)">删除</el-button>
@@ -128,15 +120,23 @@
 		<!-- 详情弹窗 -->
 		<el-dialog class="dialogInfo" v-dialogDrag title="详情" :visible.sync="infoVisiable" width="43%" :close-on-click-modal="false">
 			<el-row :gutter="20">
-				<el-col :span="12"><div class="item-line one-line"><label>地址类型：</label>{{currentRow.valueName}}</div></el-col>
-				<el-col :span="12"><div class="item-line one-line"><label>名称：</label>{{currentRow.name}}</div></el-col>
+				<el-col :span="12"><div class="item-line one-line"><label>会员卡号：</label>{{currentRow.cardNo}}</div></el-col>
+				<el-col :span="12"><div class="item-line one-line"><label>会员姓名：</label>{{currentRow.userName}}</div></el-col>
 			</el-row>	
 			<el-row :gutter="20">
-				<el-col :span="12"><div class="item-line one-line"><label>联系人：</label>{{currentRow.contact}}</div></el-col>
-				<el-col :span="12"><div class="item-line one-line"><label>联系电话：</label>{{currentRow.tel}}</div></el-col> 
+				<el-col :span="12"><div class="item-line one-line"><label>手机号码：</label>{{currentRow.phone}}</div></el-col>
+				<el-col :span="12"><div class="item-line one-line"><label>车牌号：</label>{{currentRow.carNum}}</div></el-col> 
 			</el-row>
 			<el-row :gutter="20">
-				<el-col :span="24"><div class="item-line one-line"><label>地址：</label>{{currentRow.address}}/{{currentRow.detailedAddress}}</div></el-col>
+				<el-col :span="24"><div class="item-line one-line"><label>开卡级别：</label>{{currentRow.valueName}}</div></el-col>
+			</el-row>
+			<el-row :gutter="20">
+				<el-col :span="12"><div class="item-line one-line"><label>折扣：</label>{{currentRow.discount}}</div></el-col>
+				<el-col :span="12"><div class="item-line one-line"><label>可用储值：</label>{{currentRow.money}}</div></el-col>
+			</el-row>
+			<el-row :gutter="20">
+				<el-col :span="12"><div class="item-line one-line"><label>是否有效：</label>{{currentRow.statusView}}</div></el-col>
+				<el-col :span="12"><div class="item-line one-line"><label>有效时间：</label>{{currentRow.limiteDate}}</div></el-col>
 			</el-row>
 			<el-row :gutter="20">
 				<el-col :span="12"><div class="item-line one-line"><label>修改时间：</label>{{currentRow.modifyDate}}</div></el-col>
@@ -168,14 +168,10 @@ export default {
     data() {
         return {
             query: {
-                name: '',
-				address: [],
-				provinceCode: '',
-				cityCode: '',
-				countyCode: '',
+                cardNo: '',
 				type: '',
-                contact: '',
-				tel: '',
+				phone: '',
+				carNum: '',
                 page: 1,
                 size: 10
             },
@@ -234,11 +230,8 @@ export default {
         // 获取 easy-mock 的模拟数据
         getData() {
 			this.loading = true;
-			this.query.provinceCode = this.query.address[0];
-			this.query.cityCode = this.query.address[1];
-			this.query.countyCode = this.query.address[2];	
-			const {name, type, contact, tel, provinceCode, cityCode, countyCode, page, size} = this.query;
-            memberApi.listCarCardInfo({name, type, contact, tel, provinceCode, cityCode, countyCode, page, size}).then(res => {
+			const {cardNo, type, phone, carNum, page, size} = this.query;
+            memberApi.listCarCardInfo({cardNo, type, phone, carNum, page, size}).then(res => {
 				this.loading = false;
                 this.tableData = res.data.list;
                 this.pageTotal = res.data.totalCnt;
@@ -319,14 +312,10 @@ export default {
 		},
 		// 重置搜索
 		resetForm () {
-		    this.query.name ='';
+		    this.query.cardNo ='';
 			this.query.type ='';
-			this.query.contact ='';
-			this.query.tel ='';
-			this.query.address = [];
-			this.query.provinceCode = '';
-			this.query.cityCode = '';
-			this.query.countyCode = '';
+			this.query.phone ='';
+			this.query.carNum ='';
 		},
 		// 异步获取详情接口
 		getInfoByApi (id) {
