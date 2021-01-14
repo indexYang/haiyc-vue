@@ -112,7 +112,7 @@ export default {
     },
     computed: {
         user() {
-			let user = JSON.parse(localStorage.getItem('loginInfo'));
+			let user = JSON.parse(sessionStorage.getItem('loginInfo'));
             let username = user ? user.userName : null;
 			let imgHead = user ? user.imgHead : null;
 			username = username ? username : this.name;
@@ -128,7 +128,7 @@ export default {
             if (command == 'loginout') {
 				loginout().then(res => {
 					if(res.code == 1){
-						localStorage.removeItem('loginInfo');
+						sessionStorage.removeItem('loginInfo');
 						this.$router.push('/login');
 					}else{
 						that.$message.error(res.data.message);

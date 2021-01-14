@@ -51,7 +51,7 @@ export default {
     },
     computed: {
         user() {
-        	let user = JSON.parse(localStorage.getItem('loginInfo'));
+        	let user = JSON.parse(sessionStorage.getItem('loginInfo'));
             let username = user ? user.userName : null;
         	let imgHead = user ? user.imgHead : null;
         	username = username ? username : this.name;

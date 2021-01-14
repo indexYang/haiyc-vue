@@ -35,3 +35,12 @@ export const delCarProjectInfo = params => {
         params: params
     });
 };
+
+//获取所有项目信息
+export const findAllCarProjectInfo = params => {
+    return request({
+        url: 'project/findAllCarProjectInfo.htm',
+        method: 'get',
+        params: params
+    });
+};

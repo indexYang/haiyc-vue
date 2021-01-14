@@ -55,6 +55,10 @@ export default new Router({
                     path: '/project',
                     component: () => import('../components/page/car/project/projectTable.vue'),
                     meta: { title: '项目信息' }
+                },{
+                    path: '/level',
+                    component: () => import('../components/page/car/level/levelTable.vue'),
+                    meta: { title: '会员等级' }
                 }
             ]
         },

@@ -16,7 +16,7 @@ const whiteList = []
 
 service.interceptors.request.use(
     config => {
-		let loginInfo = JSON.parse(localStorage.getItem('loginInfo'));
+		let loginInfo = JSON.parse(sessionStorage.getItem('loginInfo'));
 		if(loginInfo){
 			let token  = loginInfo.token;
 			if(token){

@@ -53,7 +53,7 @@ export default {
 					.then(function (response) {
 					 if(response.data.code == 1){
 						  that.$message.success('登录成功');
-						  localStorage.setItem('loginInfo', JSON.stringify(response.data.data));
+						  sessionStorage.setItem('loginInfo', JSON.stringify(response.data.data));
 						  that.$router.push('/');
 						  return;
 					 }else{

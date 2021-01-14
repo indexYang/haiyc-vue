@@ -20,7 +20,7 @@
 export default {
     name: 'ycFileUploadComponent',
     data () {
-        let userInfo = JSON.parse(localStorage.getItem('loginInfo'));
+        let userInfo = JSON.parse(sessionStorage.getItem('loginInfo'));
         return {
             uploaHeaders: {
                 token: userInfo.token
