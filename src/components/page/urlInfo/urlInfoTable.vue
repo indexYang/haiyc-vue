@@ -114,6 +114,7 @@
 <script>
 import { isAssetTypeAnImage } from '@/utils';
 import * as urlApi from '../../../api/urlInfo.js';
+import AES from "../../common/AES.js";
 
 export default {
     data() {
@@ -213,7 +214,23 @@ export default {
 				saveEdit(formName) {
 					this.$refs[formName].validate(valid => {
 					    if (valid) {
-					        const {name, id, account, password, url, remark} = this.form;
+							let password = this.form.password;
+							var keys = AES.generatekey(16);
+							 
+							//如果是对象/数组的话，需要先JSON.stringify转换成字符串
+							 
+							 password = AES.encrypt(JSON.stringify(password),keys);
+							// var dess = JSON.parse(AES.decrypt(encrypts,keys));
+							// var encrypts = that.$encrypt('1234asdasd',keys);
+							 
+							// var dess = that.$decrypt(encrypts,keys);
+							// console.log(encrypts)
+							// console.log(encrypts.length)
+							// console.log(dess)
+							
+							
+							
+					        const {name, id, account, url, remark} = this.form;
 					        urlApi.addOrModifyUrlInfo({name, id, account, password, url, remark}).then(res => {
 					            this.editVisible = false;
 					            this.getData();
